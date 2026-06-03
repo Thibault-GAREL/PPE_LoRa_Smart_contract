@@ -87,9 +87,9 @@ With `r=16` and `d=2048` (TinyLlama hidden size), LoRA trains only **~0.1% of th
 
 ## 📄 Research Paper Context — Why This Approach Was Not Retained
 
-> This repository is the **NLP branch** of a broader research project. The approach explored here — fine-tuning a small LLM with LoRA — was ultimately **not retained** in the final paper due to the limitations described below. The paper uses a different method.
+> This repository is the **NLP branch** of a broader research project. The approach explored here — fine-tuning a small LLM with LoRA — was ultimately **not retained** in the final paper due to the limitations described below. The final paper uses a different method (**GraphCodeBERT + Data Flow Graphs**, see the [PPE Deliverables](#-ppe-deliverables--poster-paper--defenses) section below).
 >
-> 📎 [Read the full research paper (PDF)](ppe-paper-last-version.pdf)
+> 📎 [Read the full research paper (PDF)](docs/ppe-paper.pdf)
 
 ### Setup
 
@@ -151,6 +151,78 @@ And for inference-only evaluation on the full dataset (4068 samples), using GPT-
 - Full dataset evaluation: **0.31€ × 4068 ≈ 1261€ minimum**
 
 This makes larger LLM approaches economically non-viable for this research scope.
+
+---
+
+## 📚 PPE Deliverables — Poster, Paper & Defenses
+
+> 🎓 This repository is the **LoRA / NLP exploratory branch** of a larger 6-person PPE at **ECE Paris** (ref. `#ING25-T-479`). The **final retained approach** — *Graph-Aware Transformers* (**GraphCodeBERT** + **Data Flow Graphs**) — reaches **87% F1-score** and **91% recall** on binary vulnerability detection, far beyond the LoRA results above. The complete team deliverables are below.
+
+### 🪧 Poster
+
+<p align="center">
+  <a href="docs/ppe-poster.pdf"><img src="img/preview_poster.png" alt="PPE Poster — Graph-Aware Transformers for Smart Contract Vulnerability Detection" width="100%"></a>
+</p>
+
+<p align="center"><em>📎 <a href="docs/ppe-poster.pdf">Open the full poster (PDF)</a></em></p>
+
+---
+
+### 📄 Research Paper — *Graph-Aware Transformers for Smart Contract Vulnerability Detection*
+
+<p align="center">
+  <a href="docs/ppe-paper.pdf"><img src="img/preview_paper_p1.png" alt="Research paper — first page" width="480"></a>
+</p>
+
+<p align="center"><em>📎 <a href="docs/ppe-paper.pdf">Read the full paper (PDF, 9 pages)</a></em></p>
+
+#### 📖 Read it page by page
+
+<details>
+<summary><strong>Expand the full paper, page by page (9 pages)</strong></summary>
+
+<br>
+
+<p align="center">
+  <img src="img/paper_page_01.png" alt="Paper page 1" width="650">
+  <img src="img/paper_page_02.png" alt="Paper page 2" width="650">
+  <img src="img/paper_page_03.png" alt="Paper page 3" width="650">
+  <img src="img/paper_page_04.png" alt="Paper page 4" width="650">
+  <img src="img/paper_page_05.png" alt="Paper page 5" width="650">
+  <img src="img/paper_page_06.png" alt="Paper page 6" width="650">
+  <img src="img/paper_page_07.png" alt="Paper page 7" width="650">
+  <img src="img/paper_page_08.png" alt="Paper page 8" width="650">
+  <img src="img/paper_page_09.png" alt="Paper page 9" width="650">
+</p>
+
+</details>
+
+<br>
+
+**Abstract (short).** Static auditing tools rely on rigid expert-defined rules, while generative LLMs struggle with deterministic logic and exhibit severe precision deficits. The paper proposes a deep-learning framework built on **GraphCodeBERT**, a graph-aware Transformer that fuses raw Solidity tokens with the underlying **Data Flow Graph (DFG)** through a *graph-guided masked attention* mechanism. On a strictly balanced binary setup, the fine-tuned model reaches an **87% F1-score** and a critical **91% recall**.
+
+---
+
+### 🎤 Oral Defenses
+
+Two milestone defenses (LaTeX Beamer slides) — open the first slide to dive into the full deck:
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="50%">
+<a href="docs/mid-term_defense.pdf"><img src="img/preview_midterm.png" alt="Mid-term defense — first slide" width="380"></a><br>
+<strong>Mid-term defense</strong> — 9 Dec 2025 (52 slides)<br>
+<em>📎 <a href="docs/mid-term_defense.pdf">Open the slides (PDF)</a></em>
+</td>
+<td align="center" width="50%">
+<a href="docs/final-term_defense.pdf"><img src="img/preview_finalterm.png" alt="Final defense — first slide" width="380"></a><br>
+<strong>Final defense</strong> — 6 Apr 2026 (89 slides)<br>
+<em>📎 <a href="docs/final-term_defense.pdf">Open the slides (PDF)</a></em>
+</td>
+</tr>
+</table>
+</div>
 
 ---
 
@@ -232,17 +304,23 @@ Solidity Code (raw)
 │
 ├── checkpoint-612-V1/             # LoRA checkpoint saved during training
 │
+├── docs/                          # PPE deliverables (final)
+│   ├── ppe-poster.pdf             # Conference-style poster
+│   ├── ppe-paper.pdf              # Research paper (9 pages)
+│   ├── mid-term_defense.pdf       # Mid-term defense slides (Dec 2025)
+│   └── final-term_defense.pdf     # Final defense slides (Apr 2026)
+│
 ├── img/
 │   ├── training_curves_V1.png                      # Loss/accuracy curves from run-01
 │   ├── run-01_confusion_matrix.png
 │   ├── explication-LoRa.jpeg                       # LoRA vs regular finetuning diagram
+│   ├── preview_*.png, paper_page_*.png             # Document previews for this README
 │   └── Pourquoi ne pas utiliser un modèle plus gros.pdf  # Cost analysis
 │
 ├── train.py                       # QLoRA fine-tuning with SFTTrainer
 ├── evaluate.py                    # Full evaluation (metrics + confusion matrix)
 ├── plot_training.py               # Training curve visualization
 │
-├── ppe-paper-last-version.pdf     # Full research paper
 ├── requirements.txt
 ├── Dockerfile                     # For RunPod deployment
 ├── Runpod-tuto.md                 # Step-by-step RunPod guide
@@ -308,4 +386,8 @@ This project is based on:
 - 🤗 [TinyLlama-1.1B-Chat-v1.0](https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0) — Zhang et al.
 - 🔧 [PEFT library](https://github.com/huggingface/peft) and [TRL SFTTrainer](https://github.com/huggingface/trl) by HuggingFace
 
-Code created by me 😎, Thibault GAREL - [Github](https://github.com/Thibault-GAREL)
+The other part is [**LLM benchmark**](https://github.com/Thibault-GAREL/PPE_LLM_test_Smart_contract).
+
+Big thanks to [Axel Bröns](https://github.com/axelbrons) for his huge contribution for the <a href="docs/ppe-paper.pdf">Paper </a> and his [Graph code](https://github.com/axelbrons/gat-smart-contracts) !
+
+Code created for all the Team by me 😎, Thibault GAREL - [Github](https://github.com/Thibault-GAREL)
